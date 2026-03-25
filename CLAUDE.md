@@ -1,30 +1,35 @@
-RentDaNang is a rental property aggregator for Da Nang, Vietnam. It scrapes listings from multiple Vietnamese platforms, normalizes them into a canonical format, and serves them through a Next.js frontend with map-based search and multi-language support.
+Rental aggregator for Da Nang, Vietnam. Scrapes 5 sources, normalizes listings, serves them on a map. pnpm monorepo.
 
-Stack: Next.js 14 (App Router), TypeScript, Tailwind, pnpm monorepo. Python scrapers with FastAPI backend. PostgreSQL with PostGIS for spatial queries. Redis for caching.
+Stack: Next.js 14 App Router, TypeScript, Tailwind. Python scrapers with FastAPI backend on port 8000. PostgreSQL 16 with PostGIS, Redis for caching.
 
-Getting started: pnpm install at the root, pnpm dev to run the web app. Backend: cd api && pip install -r requirements.txt && uvicorn main:app. Scraper deps: cd scrapers && pip install -r requirements.txt.
+apps/web/           Next.js frontend, port 3000
+apps/web/app/       routes
+apps/web/lib/       utils, blog engine, i18n config, db
+apps/web/components/ React components
+apps/web/__tests__/ vitest tests
+api/                FastAPI backend
+scrapers/           Python scrapers, one per source
+scrapers/processing/ normalization pipeline, canonical_builder.py is where all sources converge
+shared/             TypeScript types and constants
+database/           SQL migrations
 
-Build: pnpm build
-Lint: pnpm lint (runs next lint across packages)
-Format: pnpm format (prettier)
-Test frontend: pnpm test (vitest, runs from apps/web)
-Test scrapers: cd scrapers && pytest
+pnpm install at root. pnpm dev runs the web app. pnpm build for production. pnpm lint runs next lint. pnpm test runs vitest from apps/web. pnpm format runs prettier.
 
-Monorepo layout:
-  apps/web/        Next.js frontend (pages, components, lib/, API routes)
-  api/             FastAPI backend (listings endpoint, health check)
-  scrapers/        Python scrapers (one per source) + processing pipeline
-  shared/          TypeScript types and constants shared across packages
-  database/        SQL migrations and seed scripts
+Backend: cd api && pip install -r requirements.txt && uvicorn main:app
+Scrapers: cd scrapers && pip install -r requirements.txt
 
-Six locales: en, vi, ko, zh, ja, ru. Eight currencies: VND, USD, GBP, EUR, KRW, CNY, JPY, RUB. Touching one locale means updating all six. Locale files are in apps/web/messages/.
+Strict TypeScript, no any. Tailwind only, no CSS modules.
 
-Five scrapers with five different data shapes. Normalization is per-scraper, not centralized. They all converge in scrapers/processing/canonical_builder.py which produces the unified listing format.
+6 locales (en/vi/ko/zh/ja/ru) in apps/web/messages/. 8 currencies (VND/USD/GBP/EUR/KRW/CNY/JPY/RUB). If you touch one locale you must update all six.
 
-The map uses dynamic import because Leaflet needs window and breaks SSR. Do not import map components at the top level.
+5 scrapers with 5 different data shapes. Normalization happens per-scraper, not centralized. They all feed into scrapers/processing/canonical_builder.py.
 
-Spatial queries use PostGIS. District boundaries are GeoJSON in shared/constants.
+The map uses dynamic import because Leaflet needs window and breaks SSR. Do not import map components at top level.
 
-Strict TypeScript, no any. Tailwind only, no CSS modules. Do not add dependencies without asking. Do not modify scraper schedules or PM2 config.
+Spatial queries use PostGIS ST_DWithin, not ST_Distance. District boundaries are GeoJSON in shared/constants.
+
+Currency exchange rates are cached in Redis, not fetched live. Blog posts are .ts files in apps/web/lib/blog/posts/, statically built at compile time.
+
+Do not add dependencies without asking. Do not modify scraper schedules or PM2 config. No schema changes without a migration file in database/migrations/.
 
 Pre-commit hooks run eslint --fix and prettier --write via husky + lint-staged. Do not bypass with --no-verify.
