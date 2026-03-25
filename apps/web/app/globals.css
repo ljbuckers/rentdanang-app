@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #0077B6;
+    --primary-dark: #005A8C;
+    --primary-light: #00A5E0;
+    --accent: #FF6B6B;
+    --accent-dark: #E05555;
+    --warm: #D97706;
+    --warm-light: #F59E0B;
+    --cream: #FAF7F2;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-gray-800 antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg font-medium
+      hover:bg-primary-dark transition-colors duration-200;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-white px-4 py-2 rounded-lg font-medium
+      hover:bg-accent-dark transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium
+      hover:bg-gray-50 transition-colors duration-200;
+  }
+
+  .chip {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium
+      cursor-pointer transition-colors duration-200;
+  }
+
+  .chip-active {
+    @apply bg-primary text-white;
+  }
+
+  .chip-inactive {
+    @apply bg-gray-100 text-gray-600 hover:bg-gray-200;
+  }
+
+  .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  .card {
+    @apply bg-white rounded-xl border border-amber-100/60
+      hover:shadow-warm-md transition-all duration-200;
+    box-shadow: 0 1px 3px rgba(217, 119, 6, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* Mapbox overrides */
+.mapboxgl-popup-content {
+  @apply rounded-xl shadow-warm-lg p-0 border border-amber-100/50 !important;
+}
+
+.mapboxgl-popup-close-button {
+  @apply text-gray-400 hover:text-gray-600 text-xl p-2 !important;
+}
+
+/* Custom scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400;
+}
+
+/* Price marker on map */
+.price-marker {
+  @apply bg-amber-50 text-gray-800 text-xs font-bold px-2 py-1 rounded-full
+    shadow-md border border-amber-200 whitespace-nowrap cursor-pointer
+    hover:bg-warm hover:text-white hover:border-warm transition-colors;
+}
+
+.price-marker.active {
+  @apply bg-warm text-white border-warm shadow-lg;
+  transform: scale(1.15);
+  z-index: 10;
+}
+
+.price-marker.hovered {
+  @apply bg-warm/80 text-white border-warm/80 shadow-lg;
+  transform: scale(1.1);
+  z-index: 5;
+}
+/* cache-bust-20260314 */
+
+:root { --cache-bust: 1; }

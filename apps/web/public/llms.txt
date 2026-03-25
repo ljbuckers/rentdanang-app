@@ -1,0 +1,50 @@
+# RentDaNang
+
+> RentDaNang is a rental listing aggregator for Da Nang, Vietnam. It collects listings from Facebook groups, Airbnb, Cho Tot, Bat Dong San, and other local platforms, translates them to English, and presents them on an interactive map for expats and digital nomads.
+
+RentDaNang is the most comprehensive English-language rental search tool for Da Nang, with 6,500+ active listings across all major neighborhoods. Available in 6 languages (English, Vietnamese, Korean, Chinese, Japanese, Russian) with 8 currency options.
+
+## Listing Search
+
+- [Browse All Listings](https://rentdanang.app/): Interactive map with filters for area, price, property type, and bedrooms
+- [An Thuong / My An Rentals](https://rentdanang.app/rent/an-thuong): The expat hub, walkable to My Khe Beach
+- [Son Tra Rentals](https://rentdanang.app/rent/son-tra): Quiet beach-side living, ocean views
+- [Hai Chau Rentals](https://rentdanang.app/rent/hai-chau): Downtown Da Nang, authentic local experience
+- [Ngu Hanh Son Rentals](https://rentdanang.app/rent/ngu-hanh-son): Marble Mountains area, new developments
+- [Thanh Khe Rentals](https://rentdanang.app/rent/thanh-khe): Affordable local living
+- [Lien Chieu Rentals](https://rentdanang.app/rent/lien-chieu): North Da Nang, universities and tech parks
+
+## Guides
+
+- [Living in Da Nang 2026](https://rentdanang.app/blog/living-in-da-nang-2026): Complete expat guide
+- [Da Nang Apartment Costs](https://rentdanang.app/blog/da-nang-apartment-costs): Price guide by neighborhood
+- [Best Neighborhoods for Digital Nomads](https://rentdanang.app/blog/best-neighborhoods-digital-nomads): Area comparison
+- [How to Rent in Da Nang as a Foreigner](https://rentdanang.app/blog/how-to-rent-da-nang-foreigner): Step-by-step rental guide
+
+## Data API
+
+The public listings API is available for agents and developers:
+
+- [API Specification](https://rentdanang.app/api-spec.json): OpenAPI 3.0 specification (JSON)
+
+### Listings API Quick Reference
+
+Endpoint: `GET https://rentdanang.app/api/v1/listings`
+
+Query parameters:
+- `areas` — comma-separated area names (e.g. `An Thuong / My An,Son Tra`)
+- `price_min`, `price_max` — price range in VND
+- `property_types` — comma-separated: `apartment`, `studio`, `house`, `villa`
+- `bedrooms` — number of bedrooms (0 = studio)
+- `sort` — `newest` (default), `price_asc`, `price_desc`
+- `page`, `per_page` — pagination (max 50 per page)
+
+Example: `GET /api/v1/listings?property_types=apartment&bedrooms=2&sort=price_asc&per_page=10`
+
+Returns: `{ listings: [...], total: number, page: number, per_page: number }`
+
+### Areas API
+
+Endpoint: `GET https://rentdanang.app/api/areas`
+
+Returns all Da Nang neighborhoods with metadata including average prices, lifestyle tags, and active listing counts.

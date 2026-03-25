@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "RentDaNang",
+  "name_for_human": "RentDaNang - Da Nang Rentals",
+  "description_for_model": "Search and browse 6,500+ rental properties in Da Nang, Vietnam. Filter by area, price range, property type (apartment, house, villa, studio), and bedrooms. Returns real-time pricing in VND with availability status. Covers all Da Nang districts: An Thuong/My An, Son Tra, Hai Chau, Ngu Hanh Son, Thanh Khe, Lien Chieu, Cam Le. Data aggregated from Facebook, Airbnb, Cho Tot, and local platforms, translated to English.",
+  "description_for_human": "Find rental apartments, houses, and villas in Da Nang, Vietnam. Search 6,500+ listings by area, price, and property type.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://rentdanang.app/api-spec.json"
+  },
+  "logo_url": "https://rentdanang.app/images/logo-512.png",
+  "contact_email": "contact@rentdanang.app",
+  "legal_info_url": "https://rentdanang.app/legal"
+}

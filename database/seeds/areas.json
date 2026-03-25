@@ -1,0 +1,92 @@
+[
+  {
+    "name": "An Thuong / My An",
+    "name_vn": "An Thượng / Mỹ An",
+    "slug": "an-thuong",
+    "district": "Ngũ Hành Sơn",
+    "description": "The beating heart of expat life in Da Nang. Walking distance to My Khe Beach, packed with international restaurants, cafes, and bars. Most serviced apartments are here.",
+    "center": [16.0466, 108.2432],
+    "avg_price_1br_vnd": 10000000,
+    "avg_price_2br_vnd": 15000000,
+    "lifestyle_tags": ["beach", "expat-friendly", "nightlife", "cafes", "walkable"],
+    "boundary": [
+      [108.2350, 16.0520],
+      [108.2510, 16.0520],
+      [108.2510, 16.0400],
+      [108.2350, 16.0400],
+      [108.2350, 16.0520]
+    ]
+  },
+  {
+    "name": "Son Tra",
+    "name_vn": "Sơn Trà",
+    "slug": "son-tra",
+    "district": "Sơn Trà",
+    "description": "Beachfront premium area near Lady Buddha and Monkey Mountain. Popular for ocean views and resort-style living. Studios still snapped up quickly.",
+    "center": [16.1000, 108.2500],
+    "avg_price_1br_vnd": 9000000,
+    "avg_price_2br_vnd": 14000000,
+    "lifestyle_tags": ["beach", "ocean-view", "nature", "premium", "quiet"],
+    "boundary": [
+      [108.2200, 16.1200],
+      [108.2800, 16.1200],
+      [108.2800, 16.0600],
+      [108.2200, 16.0600],
+      [108.2200, 16.1200]
+    ]
+  },
+  {
+    "name": "Hai Chau (Downtown)",
+    "name_vn": "Hải Châu",
+    "slug": "hai-chau",
+    "district": "Hải Châu",
+    "description": "The central business district along the Han River. More local living experience with Dragon Bridge nearby. Best value for city-center access.",
+    "center": [16.0678, 108.2208],
+    "avg_price_1br_vnd": 7500000,
+    "avg_price_2br_vnd": 12000000,
+    "lifestyle_tags": ["city-center", "local", "riverside", "affordable", "business"],
+    "boundary": [
+      [108.2050, 16.0850],
+      [108.2350, 16.0850],
+      [108.2350, 16.0520],
+      [108.2050, 16.0520],
+      [108.2050, 16.0850]
+    ]
+  },
+  {
+    "name": "Ngu Hanh Son (Marble Mountains)",
+    "name_vn": "Ngũ Hành Sơn",
+    "slug": "ngu-hanh-son",
+    "district": "Ngũ Hành Sơn",
+    "description": "Growing area near Marble Mountains and FPT tech park. Newer developments with good value pricing. Popular with tech workers.",
+    "center": [16.0200, 108.2500],
+    "avg_price_1br_vnd": 7000000,
+    "avg_price_2br_vnd": 11000000,
+    "lifestyle_tags": ["growing", "value", "tech", "nature", "new-builds"],
+    "boundary": [
+      [108.2300, 16.0400],
+      [108.2650, 16.0400],
+      [108.2650, 16.0000],
+      [108.2300, 16.0000],
+      [108.2300, 16.0400]
+    ]
+  },
+  {
+    "name": "Lien Chieu (North)",
+    "name_vn": "Liên Chiểu",
+    "slug": "lien-chieu",
+    "district": "Liên Chiểu",
+    "description": "North Da Nang near Hai Van Pass. Budget-friendly with a more local residential feel. Less tourist infrastructure but authentic Vietnamese living.",
+    "center": [16.0900, 108.1500],
+    "avg_price_1br_vnd": 5000000,
+    "avg_price_2br_vnd": 8000000,
+    "lifestyle_tags": ["budget", "local", "residential", "quiet", "authentic"],
+    "boundary": [
+      [108.1200, 16.1100],
+      [108.1700, 16.1100],
+      [108.1700, 16.0700],
+      [108.1200, 16.0700],
+      [108.1200, 16.1100]
+    ]
+  }
+]

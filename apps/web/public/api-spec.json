@@ -1,0 +1,99 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "RentDaNang API",
+    "description": "Public API for searching rental listings in Da Nang, Vietnam. Listings aggregated from Facebook, Airbnb, Cho Tot, and local platforms, translated to English.",
+    "version": "1.0.0",
+    "contact": { "url": "https://rentdanang.app" }
+  },
+  "servers": [{ "url": "https://rentdanang.app", "description": "Production" }],
+  "paths": {
+    "/api/v1/listings": {
+      "get": {
+        "summary": "Search active rental listings",
+        "description": "Returns paginated rental listings with filtering by area, price, property type, bedrooms, and map bounds.",
+        "operationId": "getListings",
+        "parameters": [
+          { "name": "areas", "in": "query", "description": "Comma-separated area names (e.g. An Thuong / My An,Son Tra)", "schema": { "type": "string" } },
+          { "name": "price_min", "in": "query", "description": "Min monthly price in VND", "schema": { "type": "integer" } },
+          { "name": "price_max", "in": "query", "description": "Max monthly price in VND", "schema": { "type": "integer" } },
+          { "name": "property_types", "in": "query", "description": "Comma-separated: apartment, studio, house, villa", "schema": { "type": "string" } },
+          { "name": "bedrooms", "in": "query", "description": "Number of bedrooms (0=studio)", "schema": { "type": "integer" } },
+          { "name": "sort", "in": "query", "description": "Sort order", "schema": { "type": "string", "enum": ["newest", "price_asc", "price_desc"], "default": "newest" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "per_page", "in": "query", "description": "Results per page (max 50)", "schema": { "type": "integer", "default": 20, "maximum": 50 } },
+          { "name": "map_pins", "in": "query", "description": "If true, returns all pins for map rendering (no pagination)", "schema": { "type": "boolean" } },
+          { "name": "north", "in": "query", "description": "Map bounds north latitude", "schema": { "type": "number" } },
+          { "name": "south", "in": "query", "schema": { "type": "number" } },
+          { "name": "east", "in": "query", "schema": { "type": "number" } },
+          { "name": "west", "in": "query", "schema": { "type": "number" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listing results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "listings": { "type": "array", "items": { "$ref": "#/components/schemas/Listing" } },
+                    "total": { "type": "integer" },
+                    "page": { "type": "integer" },
+                    "per_page": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/areas": {
+      "get": {
+        "summary": "Get Da Nang neighborhoods",
+        "description": "Returns all neighborhoods with metadata including average prices and listing counts.",
+        "operationId": "getAreas",
+        "responses": {
+          "200": {
+            "description": "Area list",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "areas": { "type": "array", "items": { "$ref": "#/components/schemas/Area" } } } } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Listing": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title_en": { "type": "string" },
+          "description_en": { "type": "string" },
+          "property_type": { "type": "string", "enum": ["apartment", "studio", "house", "villa"] },
+          "bedrooms": { "type": "integer" },
+          "bathrooms": { "type": "integer" },
+          "area_sqm": { "type": "number" },
+          "price_vnd": { "type": "integer", "description": "Monthly price in VND" },
+          "price_usd": { "type": "number", "description": "Monthly price in USD" },
+          "area_name": { "type": "string" },
+          "latitude": { "type": "number" },
+          "longitude": { "type": "number" },
+          "thumbnail_url": { "type": "string", "format": "uri" },
+          "source_platform": { "type": "string" },
+          "first_seen_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Area": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description_en": { "type": "string" },
+          "center_lat": { "type": "number" },
+          "center_lon": { "type": "number" },
+          "listing_count": { "type": "integer" }
+        }
+      }
+    }
+  }
+}
