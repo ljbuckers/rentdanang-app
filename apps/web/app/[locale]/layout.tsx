@@ -21,13 +21,13 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://rentdanang.app"),
   title: "RentDaNang — Find Rentals in Da Nang, Vietnam",
   description:
-    "Search rental apartments, houses, and villas in Da Nang on an interactive map. Listings from Facebook, Airbnb, Cho Tot, and more — translated to English.",
+    "Find apartments, houses and villas for rent in Da Nang, Vietnam. Explore rental listings on an interactive map and compare locations and monthly prices.",
   keywords:
     "Da Nang rental, Vietnam apartment, expat housing, Da Nang apartment, rent Da Nang, digital nomad housing",
   openGraph: {
     title: "RentDaNang — Find Rentals in Da Nang, Vietnam",
     description:
-      "The easiest way to find verified apartments, houses, and villas in Da Nang. Browse listings on an interactive map.",
+      "Explore apartments, houses and villas for rent in Da Nang, Vietnam. Compare rental locations and monthly prices on an interactive map.",
     url: "https://rentdanang.app",
     siteName: "RentDaNang",
     locale: "en_US",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "RentDaNang — Find Rentals in Da Nang",
-    description: "Search 6,500+ verified listings in Da Nang, Vietnam.",
+    description: "Find apartments, houses and villas for rent in Da Nang, Vietnam. Compare rental listings and locations.",
     images: ["/og-default.png"],
   },
   verification: {
