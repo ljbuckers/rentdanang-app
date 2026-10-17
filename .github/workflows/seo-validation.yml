@@ -1,0 +1,88 @@
+name: SEO source validation
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'apps/web/**'
+      - 'shared/**'
+      - 'package.json'
+      - 'pnpm-workspace.yaml'
+      - 'pnpm-lock.yaml'
+      - '.eslintrc.json'
+      - '.github/workflows/seo-validation.yml'
+
+# Validation only. No deployment, secret access, repository writes or paid runners.
+permissions:
+  contents: read
+
+concurrency:
+  group: seo-validation-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    # Do not consume private-repository minutes or execute unrelated/fork branches.
+    if: >-
+      github.repository == 'ljbuckers/rentdanang-app' &&
+      github.event.repository.private == false &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'fix/seo-copy-20261017'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CI: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - name: Check out the exact proposed commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '20'
+
+      - name: Install the declared package manager
+        run: npm install --global pnpm@9.15.9 --ignore-scripts
+
+      - name: Install existing web dependencies
+        id: dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --version
+          pnpm --version
+          if test -f pnpm-lock.yaml; then
+            pnpm --filter @rentdanang/web... install --frozen-lockfile
+          else
+            echo '::warning::This branch has no committed pnpm lockfile. Dependency resolution is diagnostic, not a reproducible release build.'
+            pnpm --filter @rentdanang/web... install --no-frozen-lockfile
+          fi
+          if test -f pnpm-lock.yaml; then sha256sum pnpm-lock.yaml; fi
+
+      - name: Run utility and localized metadata tests
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: pnpm --filter @rentdanang/web exec vitest run __tests__/utils.test.ts __tests__/home-seo.test.ts
+
+      - name: Typecheck the web application without executing it
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: pnpm --filter @rentdanang/web exec tsc --noEmit --incremental false
+
+      - name: Lint the changed page, layout, helper and test
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: pnpm --filter @rentdanang/web exec next lint --file 'app/[locale]/layout.tsx' --file 'app/[locale]/page.tsx' --file 'lib/home-seo.ts' --file '__tests__/home-seo.test.ts'
+
+      - name: Record the validation boundary
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          {
+            echo '### Source validation only'
+            echo 'This workflow does not deploy, merge, contact clinics, charge customers or use production credentials.'
+            echo 'It does not establish production-source linkage, a successful production build or live SEO performance.'
+            echo 'Each preceding step retains its actual success or failure status. A missing lockfile is not silently accepted as reproducible release evidence.'
+          } >> "$GITHUB_STEP_SUMMARY"
